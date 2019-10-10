@@ -1,8 +1,7 @@
 package matrixsystems.retrofitrepositorypattern.network
 
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 /**
@@ -11,6 +10,7 @@ import retrofit2.http.POST
 interface APIService {
 
     @POST("/login")
-    fun doLogin(username : String, password : String): Call<APIResponse>
+    @FormUrlEncoded
+    fun doLogin(@Field("username") username : String, @Field("password") password : String): Call<APIResponse>
 
 }

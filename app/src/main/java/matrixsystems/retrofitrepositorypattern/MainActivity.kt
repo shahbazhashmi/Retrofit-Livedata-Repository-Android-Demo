@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         loginRepository = LoginRepository(ServiceGenerator.createService(APIService::class.java))
 
-        loginRepository.doLogin("9097769906", "123").observe(this, Observer {
+        loginRepository.doLogin("9876543210", "123").observe(this, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
                     Log.d(TAG, "api loading ...")
