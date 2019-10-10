@@ -12,7 +12,7 @@ import javax.inject.Singleton;
  * Created by Shahbaz Hashmi on 2019-10-11.
  */
 @Module
-public class ApiModule {
+public class RepositoryModule {
 
     @Provides
     @Singleton

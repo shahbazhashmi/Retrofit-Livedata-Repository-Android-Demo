@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as MyApplication).netComponent.inject(this)
+        (application as MyApplication).getRepositoryComponent().inject(this)
 
         loginRepository.doLogin("9876543210", "123").observe(this, Observer {
             when(it.status) {

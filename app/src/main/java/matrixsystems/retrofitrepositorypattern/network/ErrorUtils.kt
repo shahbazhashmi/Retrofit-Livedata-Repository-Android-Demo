@@ -24,7 +24,7 @@ object ErrorUtils {
                 throw IOException("null error body")
             }
         } catch (e: IOException) {
-            error = APIError(2, "data not found")
+            error = APIError(404, e.localizedMessage)
         }
 
         return error!!
