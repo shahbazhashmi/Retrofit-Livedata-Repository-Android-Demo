@@ -4,22 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import matrixsystems.retrofitrepositorypattern.network.APIService
-import matrixsystems.retrofitrepositorypattern.network.LoginRepository
+import matrixsystems.retrofitrepositorypattern.repositories.LoginRepository
 import matrixsystems.retrofitrepositorypattern.network.Resource
-import matrixsystems.retrofitrepositorypattern.network.ServiceGenerator
+import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
+    @Inject
     lateinit var loginRepository: LoginRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loginRepository = LoginRepository(ServiceGenerator.createService(APIService::class.java))
+        (application as MyApplication).netComponent.inject(this)
 
         loginRepository.doLogin("9876543210", "123").observe(this, Observer {
             when(it.status) {

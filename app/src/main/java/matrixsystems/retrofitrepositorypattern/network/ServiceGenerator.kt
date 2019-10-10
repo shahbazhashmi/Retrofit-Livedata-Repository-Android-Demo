@@ -24,6 +24,7 @@ object ServiceGenerator {
 
     private val httpClient = OkHttpClient.Builder()
 
+    @JvmStatic
     fun <S> createService(
         serviceClass: Class<S>
     ): S {
