@@ -19,8 +19,11 @@ object ServiceGenerator {
     var retrofit = builder.build()
 
 
-    private val logging = HttpLoggingInterceptor()
-        .setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val logging by lazy {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging
+    }
 
     private val httpClient = OkHttpClient.Builder()
 
