@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
+import matrixsystems.retrofitrepositorypattern.di.DIManager
 import matrixsystems.retrofitrepositorypattern.repositories.LoginRepository
 import matrixsystems.retrofitrepositorypattern.network.Resource
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as MyApplication).repositoryComponent.inject(this)
+        DIManager.repositoryComponent.inject(this)
 
         loginRepository.doLogin("9876543210", "123").observe(this, Observer {
             when(it.status) {
