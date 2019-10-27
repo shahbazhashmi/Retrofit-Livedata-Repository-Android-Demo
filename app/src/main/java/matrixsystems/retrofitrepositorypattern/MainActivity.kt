@@ -16,7 +16,11 @@ import matrixsystems.retrofitrepositorypattern.network.ServiceGenerator
 import javax.inject.Inject
 
 
+
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var loginRepository : LoginRepository
 
     private val TAG = "MainActivity"
 
@@ -26,14 +30,14 @@ class MainActivity : AppCompatActivity() {
         MainViewModel(application)
     }
 
-    //@Inject
-    val loginRepository = LoginRepository(ServiceGenerator.createService(APIService::class.java))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.vm = viewModel
+
+        DIManager.repositoryComponent.inject(this)
 
         viewModel.classEvent.observe(this, Observer {
             when(it) {

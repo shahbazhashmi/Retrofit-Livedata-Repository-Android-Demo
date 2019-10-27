@@ -25,8 +25,6 @@ class MainViewModel(appContext : Application) : AndroidViewModel(appContext) {
 
     init {
 
-        //DIManager.repositoryComponent.inject(appContext)
-
     }
 
     fun onCallClick(v : View) {
