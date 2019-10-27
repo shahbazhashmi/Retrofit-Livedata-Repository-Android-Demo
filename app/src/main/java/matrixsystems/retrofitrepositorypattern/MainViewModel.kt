@@ -1,6 +1,7 @@
 package matrixsystems.retrofitrepositorypattern
 
 import android.app.Application
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -35,6 +36,21 @@ class MainViewModel(appContext : Application) : AndroidViewModel(appContext) {
 
     sealed class ClassEvent() {
         class DoLogin(val username : String, val password : String) : ClassEvent()
+    }
+
+
+    fun handleLoginCallbacks(data : Resource<APIResponse>) {
+        when(data.status) {
+            Resource.Status.LOADING -> {
+                Log.d(TAG, "api loading ...")
+            }
+            Resource.Status.SUCCESS -> {
+                Log.d(TAG, "api success")
+            }
+            Resource.Status.ERROR -> {
+                Log.d(TAG, "api error - ${data.apiError?.message}")
+            }
+        }
     }
 
 }

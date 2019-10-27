@@ -43,17 +43,7 @@ class MainActivity : AppCompatActivity() {
             when(it) {
                 is MainViewModel.ClassEvent.DoLogin -> {
                     loginRepository.doLogin(it.username, it.password).observe(this, Observer {
-                        when(it.status) {
-                            Resource.Status.LOADING -> {
-                                Log.d(TAG, "api loading ...")
-                            }
-                            Resource.Status.SUCCESS -> {
-                                Log.d(TAG, "api success")
-                            }
-                            Resource.Status.ERROR -> {
-                                Log.d(TAG, "api error - ${it.apiError?.message}")
-                            }
-                        }
+                        viewModel.handleLoginCallbacks(it)
                     })
                 }
             }
