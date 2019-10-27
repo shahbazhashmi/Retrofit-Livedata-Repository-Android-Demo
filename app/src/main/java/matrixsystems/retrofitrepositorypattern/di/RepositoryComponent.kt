@@ -1,7 +1,7 @@
 package matrixsystems.retrofitrepositorypattern.di
 
+import android.app.Application
 import dagger.Component
-import matrixsystems.retrofitrepositorypattern.MainActivity
 
 import javax.inject.Singleton
 
@@ -11,5 +11,5 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [RepositoryModule::class])
 interface RepositoryComponent {
-    fun inject(activity: MainActivity)
+    fun inject(appContext: Application)
 }

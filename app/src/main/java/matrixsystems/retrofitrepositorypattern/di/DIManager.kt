@@ -15,7 +15,6 @@ object DIManager {
 
     fun init() {
         repositoryComponent = DaggerRepositoryComponent.builder()
-            .repositoryModule(RepositoryModule())
             .build()
     }
 

@@ -3,7 +3,11 @@ package matrixsystems.retrofitrepositorypattern
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
+import kotlinx.android.synthetic.main.activity_main.*
+import matrixsystems.retrofitrepositorypattern.databinding.ActivityMainBinding
 import matrixsystems.retrofitrepositorypattern.di.DIManager
 import matrixsystems.retrofitrepositorypattern.repositories.LoginRepository
 import matrixsystems.retrofitrepositorypattern.network.Resource
@@ -14,16 +18,21 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
-    @Inject
-    lateinit var loginRepository: LoginRepository
+    lateinit var binding: ActivityMainBinding
+
+    val viewModel : MainViewModel by lazy {
+        MainViewModel(application)
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
 
-        DIManager.repositoryComponent.inject(this)
-
-        loginRepository.doLogin("9876543210", "123").observe(this, Observer {
+        /*.observe(this, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
                     Log.d(TAG, "api loading ...")
@@ -35,8 +44,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "api error - ${it.apiError?.message}")
                 }
             }
-        })
-
+        })*/
 
     }
 }
