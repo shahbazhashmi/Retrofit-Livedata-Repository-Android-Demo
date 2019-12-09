@@ -1,6 +1,5 @@
 package matrixsystems.retrofitrepositorypattern.di
 
-import android.app.Application
 import dagger.Component
 import matrixsystems.retrofitrepositorypattern.MainActivity
 
