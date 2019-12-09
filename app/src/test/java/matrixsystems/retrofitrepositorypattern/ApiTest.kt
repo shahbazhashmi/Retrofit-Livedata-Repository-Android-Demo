@@ -2,7 +2,7 @@ package matrixsystems.retrofitrepositorypattern
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import junit.framework.Assert.assertEquals
+import junit.framework.Assert.*
 import matrixsystems.retrofitrepositorypattern.network.APIService
 import matrixsystems.retrofitrepositorypattern.network.Resource
 import matrixsystems.retrofitrepositorypattern.network.ServiceGenerator
@@ -21,26 +21,10 @@ class ApiTest {
 
 
     @Test
-    fun fetchUserRepositories_positiveResponse() {
+    fun doLoginRepository_positiveResponse() {
         val loginRepository  = LoginRepository(ServiceGenerator.createService(APIService::class.java))
-
-        /*loginRepository.doLogin("9876543210", "admin123").observeForever {
-            when(it.status) {
-                Resource.Status.LOADING -> {
-                    //assert(false)
-                }
-                Resource.Status.SUCCESS -> {
-                    //assertEquals(Resource.Status.SUCCESS, it.status)
-                    assert(false)
-
-                }
-                Resource.Status.ERROR -> {
-                    assert(false)
-                }
-            }
-        }*/
-
-        assertEquals(loginRepository.doLogin("9876543210", "admin123").getOrAwaitValue().status, Resource.Status.ERROR)
+        val loginLiveData = loginRepository.doLogin("9876543210", "admin123")
+        assertEquals(loginLiveData.getOrAwaitValue().status, Resource.Status.SUCCESS)
     }
 
 

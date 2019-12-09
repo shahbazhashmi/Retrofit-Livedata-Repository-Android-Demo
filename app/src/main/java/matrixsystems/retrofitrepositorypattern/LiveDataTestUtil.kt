@@ -1,7 +1,9 @@
 package matrixsystems.retrofitrepositorypattern
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import matrixsystems.retrofitrepositorypattern.network.Resource
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -11,17 +13,19 @@ import java.util.concurrent.TimeoutException
  */
 /* Copyright 2019 Google LLC.
   SPDX-License-Identifier: Apache-2.0 */
-fun <T> LiveData<T>.getOrAwaitValue(
+fun <T> MutableLiveData<Resource<T>>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS
-): T {
-    var data: T? = null
+): Resource<T> {
+    var data: Resource<T>? = null
     val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(o: T?) {
-            data = o
-            latch.countDown()
-            this@getOrAwaitValue.removeObserver(this)
+    val observer = object : Observer<Resource<T>> {
+        override fun onChanged(o: Resource<T>?) {
+            if(o?.status != Resource.Status.LOADING) {
+                data = o
+                latch.countDown()
+                this@getOrAwaitValue.removeObserver(this)
+            }
         }
     }
 
@@ -33,5 +37,5 @@ fun <T> LiveData<T>.getOrAwaitValue(
     }
 
     @Suppress("UNCHECKED_CAST")
-    return data as T
+    return data as Resource<T>
 }
