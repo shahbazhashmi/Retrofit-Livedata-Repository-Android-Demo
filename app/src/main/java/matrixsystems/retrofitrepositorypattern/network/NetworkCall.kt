@@ -14,7 +14,7 @@ open class NetworkCall<T>{
     fun makeCall(call:Call<T>):MutableLiveData<Resource<T>>{
         this.call = call
         val callBackKt = CallBackKt<T>()
-        callBackKt.result.value = Resource.loading(null)
+        //callBackKt.result.value = Resource.loading(null)
         this.call.clone().enqueue(callBackKt)
         return callBackKt.result
     }
