@@ -33,16 +33,17 @@ class ApiTest {
             it.lang = "97887"
         }
 
-        val loginLiveData = LoginRepository(ServiceGenerator.createService(APIService::class.java))
-            .doLogin(request).getOrAwaitValue()
+        val loginLiveData = LoginRepository(ServiceGenerator.createService(APIService::class.java)).doLogin(request)
 
-        if(loginLiveData.status == Resource.Status.ERROR) {
-            System.out.println("API ERROR -> ${loginLiveData.apiError}")
+        loginLiveData.observeForApiTesting {
+            if(it?.status == Resource.Status.ERROR) {
+                System.out.println("API ERROR -> ${it.apiError}")
+            }
+            else {
+                System.out.println("API RESPONSE -> ${it?.data}")
+            }
+            assertEquals(it?.status, Resource.Status.SUCCESS)
         }
-        else {
-            System.out.println("API RESPONSE -> ${loginLiveData.data}")
-        }
-        assertEquals(loginLiveData.status, Resource.Status.SUCCESS)
     }
 
 

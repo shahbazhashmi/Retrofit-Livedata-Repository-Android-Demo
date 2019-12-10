@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Shahbaz Hashmi on 2019-10-09.
@@ -11,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceGenerator {
 
     private val BASE_URL = "http://cubictreesmart.com/API/"
+
+    const val NETWORK_TIMEOUT = 30L;
 
     private val builder = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -26,6 +29,9 @@ object ServiceGenerator {
     }
 
     private val httpClient = OkHttpClient.Builder()
+        .connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+        .writeTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
 
     @JvmStatic
     fun <S> createService(
