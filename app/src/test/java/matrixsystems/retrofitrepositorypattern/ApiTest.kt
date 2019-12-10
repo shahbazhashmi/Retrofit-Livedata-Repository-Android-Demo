@@ -2,6 +2,7 @@ package matrixsystems.retrofitrepositorypattern
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import matrixsystems.retrofitrepositorypattern.di.DIManager
+import matrixsystems.retrofitrepositorypattern.models.LoginRequest
 import matrixsystems.retrofitrepositorypattern.network.APIService
 import matrixsystems.retrofitrepositorypattern.network.Resource
 import matrixsystems.retrofitrepositorypattern.network.ServiceGenerator
@@ -23,8 +24,17 @@ class ApiTest {
 
     @Test
     fun doLoginRepository_positiveResponse() {
+
+        val request = LoginRequest().also {
+            it.email = "lawfirm@ct.com"
+            it.password = "Legal@123"
+            it.source = "2"
+            it.lat = "298"
+            it.lang = "97887"
+        }
+
         val loginLiveData = LoginRepository(ServiceGenerator.createService(APIService::class.java))
-            .doLogin("9876543210", "admin123").getOrAwaitValue()
+            .doLogin(request).getOrAwaitValue()
 
         if(loginLiveData.status == Resource.Status.ERROR) {
             System.out.println("API ERROR -> ${loginLiveData.apiError}")

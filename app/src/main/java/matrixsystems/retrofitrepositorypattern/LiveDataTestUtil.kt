@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException
 /* Copyright 2019 Google LLC.
   SPDX-License-Identifier: Apache-2.0 */
 fun <T> MutableLiveData<Resource<T>>.getOrAwaitValue(
-    time: Long = 2,
+    time: Long = 10,
     timeUnit: TimeUnit = TimeUnit.SECONDS
 ): Resource<T> {
     var data: Resource<T>? = null

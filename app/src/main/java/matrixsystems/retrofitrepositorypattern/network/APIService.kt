@@ -1,5 +1,6 @@
 package matrixsystems.retrofitrepositorypattern.network
 
+import matrixsystems.retrofitrepositorypattern.models.LoginRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -9,8 +10,7 @@ import retrofit2.http.*
  */
 interface APIService {
 
-    @POST("/login")
-    @FormUrlEncoded
-    fun doLogin(@Field("username") username : String, @Field("password") password : String): Call<APIResponse>
+    @POST("MobileAPI/TokenLogin")
+    fun doLogin(@Body request : LoginRequest): Call<APIResponse>
 
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Transformations
 import kotlinx.android.synthetic.main.activity_main.*
 import matrixsystems.retrofitrepositorypattern.databinding.ActivityMainBinding
 import matrixsystems.retrofitrepositorypattern.di.DIManager
+import matrixsystems.retrofitrepositorypattern.models.LoginRequest
 import matrixsystems.retrofitrepositorypattern.network.APIService
 import matrixsystems.retrofitrepositorypattern.repositories.LoginRepository
 import matrixsystems.retrofitrepositorypattern.network.Resource
@@ -42,7 +43,14 @@ class MainActivity : AppCompatActivity() {
         viewModel.classEvent.observe(this, Observer {
             when(it) {
                 is MainViewModel.ClassEvent.DoLogin -> {
-                    loginRepository.doLogin(it.username, it.password).observe(this, Observer {
+                    val request = LoginRequest().also {
+                        it.email = "lawfirm@ct.com"
+                        it.password = "Legal@123"
+                        it.source = "2"
+                        it.lat = "298"
+                        it.lang = "97887"
+                    }
+                    loginRepository.doLogin(request).observe(this, Observer {
                         viewModel.handleLoginCallbacks(it)
                     })
                 }

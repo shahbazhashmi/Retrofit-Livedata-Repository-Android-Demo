@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ServiceGenerator {
 
-    private val BASE_URL = "https://api.github.com/"
+    private val BASE_URL = "http://cubictreesmart.com/API/"
 
     private val builder = Retrofit.Builder()
         .baseUrl(BASE_URL)
