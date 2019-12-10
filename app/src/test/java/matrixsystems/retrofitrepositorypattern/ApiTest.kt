@@ -23,7 +23,7 @@ class ApiTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Test
-    fun doLoginRepository_positiveResponse() {
+    fun doLoginRepository_completedResponse() {
 
         val request = LoginRequest().also {
             it.email = "lawfirm@ct.com"
@@ -38,11 +38,12 @@ class ApiTest {
         loginLiveData.observeForApiTesting {
             if(it?.status == Resource.Status.ERROR) {
                 System.out.println("API ERROR -> ${it.apiError}")
+                assert(false)
             }
             else {
                 System.out.println("API RESPONSE -> ${it?.data}")
+                assert(true)
             }
-            assertEquals(it?.status, Resource.Status.SUCCESS)
         }
     }
 

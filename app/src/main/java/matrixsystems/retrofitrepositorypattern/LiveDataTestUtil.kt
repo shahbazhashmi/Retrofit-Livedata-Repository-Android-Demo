@@ -62,9 +62,15 @@ fun <T> MutableLiveData<Resource<T>>.observeForApiTesting(block: (Resource<T>?) 
     val observer = object : Observer<Resource<T>> {
         override fun onChanged(o: Resource<T>?) {
             if(o?.status != Resource.Status.LOADING) {
-                block(o)
-                latch.countDown()
-                this@observeForApiTesting.removeObserver(this)
+                // added try to avoid below TimeoutException
+                // in case of AssertionException
+                try {
+                    block(o)
+                }
+                finally {
+                    latch.countDown()
+                    this@observeForApiTesting.removeObserver(this)
+                }
             }
         }
     }
